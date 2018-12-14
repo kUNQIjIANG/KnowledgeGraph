@@ -29,8 +29,7 @@ public class Extractor {
 
     }
 
-
-
+    // test git
     private static ArrayList<HashMap> getChildrenDict (CoNLLSentence sentence){
         ArrayList<HashMap> childDict = new ArrayList<>();
         for (int i = 0; i < sentence.word.length; i++){
@@ -51,6 +50,7 @@ public class Extractor {
             childDict.add(children);
         }
         return childDict;
+
     }
 
     private static String trackEntity(CoNLLSentence sentence, ArrayList<HashMap> childrenDict, int wordId){
@@ -123,8 +123,8 @@ public class Extractor {
 
 
     public static void main(String[] args) {
-        //String test = "徐先生还具体帮助他确定了把画雄鹰、松鼠和麻雀作为主攻目标。";
-        String test = "城建成为外商投资新热点，莫言是第一个诺贝尔文学奖作家。";
+        String test = "徐先生还具体帮助他确定了把画雄鹰、松鼠和麻雀作为主攻目标。";
+        //String test = "城建成为外商投资新热点，莫言是第一个诺贝尔文学奖作家。";
         //String test = "管理局发现该企业生产存在记录造假";
         //等严重违反《药品生产质量管理规范》行为。
         CoNLLSentence sent = HanLP.parseDependency(test);
