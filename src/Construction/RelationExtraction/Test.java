@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class Test {
     public static void main(String[] args) throws IOException {
-        String SENTENCE = "成龙是第一个获得诺贝尔文学奖的中国籍作家。";
+        String SENTENCE = "海南省财政厅是第一个获得诺贝尔文学奖的中国籍作家。";
         PerceptronLexicalAnalyzer analyzer = new PerceptronLexicalAnalyzer("E:/hanLP/data/model/perceptron/pku199801/cws.bin",
                                                                             Config.PerceptronPOSModelPath,
                                                                             Config.PerceptronNERModelPath);
@@ -23,7 +23,7 @@ public class Test {
         Sentence sentence = analyzer.analyze(SENTENCE);
 
         String[] sentence1 = recognizer.recognize("吴忠市 习近平 联合国 谭利华 来到 布达拉宫 广场".split(" "), "ns nr nt nr p ns n".split(" "));
-        String[] sentence2 = recognizer.recognize("成龙 是 第一 个 获得 诺贝尔文学奖 的 中国 籍作家 。".split(" "), "nr v m q v nz u ns n w".split(" "));
+        String[] sentence2 = recognizer.recognize("海南省财政厅 是 第一 个 获得 诺贝尔文学奖 的 中国 籍作家 。".split(" "), "nt v m q v nz u ns n w".split(" "));
 
         System.out.println("1: "+sentence);
         for (String s : sentence2){
