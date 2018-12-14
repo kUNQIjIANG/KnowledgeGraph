@@ -37,7 +37,6 @@ public class Extractor {
             HashMap<String,ArrayList<Integer>> children = new HashMap<>();
             for (CoNLLWord word : sentence){
                 if (word.HEAD.equals(curWord)){
-                    System.out.println("true");
                     if (children.containsKey(word.DEPREL)){
                         children.get(word.DEPREL).add(word.ID);
                     }else{
@@ -54,8 +53,8 @@ public class Extractor {
     }
 
     private static String trackEntity(CoNLLSentence sentence, ArrayList<HashMap> childrenDict, int wordId){
-        if (!childrenDict.get(wordId).isEmpty()) {
-            HashMap<String, ArrayList<Integer>> childDict = childrenDict.get(wordId);
+        if (!childrenDict.get(wordId-1).isEmpty()) {
+            HashMap<String, ArrayList<Integer>> childDict = childrenDict.get(wordId-1);
             String prefix = "";
             if (childDict.containsKey("定中关系")) {
                 for (int i : childDict.get("定中关系")) {
@@ -64,7 +63,7 @@ public class Extractor {
             }
 
             String postfix = "";
-            if (sentence.word[wordId].CPOSTAG.equals("v")) {
+            if (sentence.word[wordId-1].CPOSTAG.equals("v")) {
                 if (childDict.containsKey("动宾关系")) {
                     postfix += trackEntity(sentence, childrenDict, childDict.get("动宾关系").get(0));
                 }
@@ -73,9 +72,9 @@ public class Extractor {
                 }
             }
 
-            return prefix + sentence.word[wordId].LEMMA + postfix;
+            return prefix + sentence.word[wordId-1].LEMMA + postfix;
         }
-        return sentence.word[wordId].LEMMA;
+        return sentence.word[wordId-1].LEMMA;
     }
 
     private static void SVO(CoNLLSentence sentence, ArrayList<HashMap> childrenDict){
@@ -108,9 +107,9 @@ public class Extractor {
                 if (childDict.containsKey("主谓关系") && childDict.containsKey("动补结构")){
                     String e1 = trackEntity(sentence, childrenDict, childDict.get("主谓关系").get(0));
                     int cmp_index = childDict.get("动补结构").get(0);
-                    String relation = curWord.LEMMA + sentence.word[cmp_index].LEMMA;
-                    if (childrenDict.get(cmp_index).containsKey("介宾关系")){
-                        HashMap<String,ArrayList<Integer>> pos = childrenDict.get(cmp_index);
+                    String relation = curWord.LEMMA + sentence.word[cmp_index-1].LEMMA; //做 完
+                    if (childrenDict.get(cmp_index-1).containsKey("介宾关系")){
+                        HashMap<String,ArrayList<Integer>> pos = childrenDict.get(cmp_index-1);
                         String e2 = trackEntity(sentence,childrenDict,pos.get("介宾关系").get(0));
                         System.out.printf("介宾关系主谓动补\t(%s,%s,%s)\n",e1,relation,e2);
                     }
@@ -121,17 +120,19 @@ public class Extractor {
 
     }
 
-
     public static void main(String[] args) {
-        String test = "徐先生还具体帮助他确定了把画雄鹰、松鼠和麻雀作为主攻目标。";
+        //String test = "徐先生还具体帮助李红确定了把画雄鹰、松鼠和麻雀作为主攻目标。";
+        //String test = "没有用";
         //String test = "城建成为外商投资新热点，莫言是第一个诺贝尔文学奖作家。";
-        //String test = "管理局发现该企业生产存在记录造假";
+        String test = "管理局发现该企业造假";
         //等严重违反《药品生产质量管理规范》行为。
         CoNLLSentence sent = HanLP.parseDependency(test);
+        System.out.println(sent);
         ArrayList<HashMap> childDict = getChildrenDict(sent);
         SVO(sent,childDict);
 
         for ( int i = 0; i < childDict.size();  i++){
+            System.out.print(sent.word[i].LEMMA);
             System.out.println(childDict.get(i));
         }
         String[] test_set = test.split("，");
