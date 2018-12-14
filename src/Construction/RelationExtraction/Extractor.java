@@ -3,11 +3,12 @@ package Construction.RelationExtraction;
 import com.hankcs.hanlp.HanLP;
 import com.hankcs.hanlp.corpus.dependency.CoNll.CoNLLSentence;
 import com.hankcs.hanlp.corpus.dependency.CoNll.CoNLLWord;
+import com.hankcs.hanlp.corpus.document.sentence.word.CompoundWord;
 import com.hankcs.hanlp.dependency.nnparser.NeuralNetworkDependencyParser;
 import com.hankcs.hanlp.model.crf.CRFNERecognizer;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class Extractor {
 
@@ -147,22 +148,61 @@ public class Extractor {
 
     }
 
+    public static ArrayList<String> getPath (CoNLLSentence sent, ArrayList<HashMap> childrenDict, CoNLLWord source, CoNLLWord target){
+        HashMap<CoNLLWord, ArrayList<String>> paths = new HashMap<>();
+        Queue<CoNLLWord> queue = new LinkedList<>();
+        queue.add(source);
+        ArrayList<String> sourcePath = new ArrayList<>();
+        paths.put(source,sourcePath);
+        while (!queue.isEmpty()){
+            CoNLLWord cur = queue.remove();
+            HashMap<String,ArrayList<Integer>> children = childrenDict.get(cur.ID-1);
+
+            // children path
+            for (Map.Entry<String,ArrayList<Integer>> entry : children.entrySet()){
+                for (int child : entry.getValue()){
+                    CoNLLWord childWord = sent.word[child-1];
+                    if (!paths.containsKey(childWord)){
+                        ArrayList<String> childPath = new ArrayList<>(paths.get(cur));
+                        childPath.add(childWord.DEPREL);
+                        paths.put(childWord,childPath);
+                        queue.add(childWord);
+                        if (childWord.equals(target)) return paths.get(target);
+                    }
+                }
+            }
+
+            // head path
+            if (!cur.DEPREL.equals("核心关系")) {
+                CoNLLWord headWord = cur.HEAD;
+                if (!paths.containsKey(headWord)) {
+                    ArrayList<String> headPath = new ArrayList<>(paths.get(cur));
+                    headPath.add(cur.DEPREL);
+                    paths.put(headWord, headPath);
+                    queue.add(headWord);
+                    if (headWord.equals(target)) return paths.get(target);
+                }
+            }
+        }
+        return paths.get(target);
+    }
+
     public static void main(String[] args) {
         //String test = "徐先生还具体帮助李红确定了把画雄鹰、松鼠和麻雀作为主攻目标。";
         //String test = "没有用";
         //String test = "热门报道 金融界 朱邦凌:疫苗生产记录造假的背后是对生命的漠视2016年山东疫苗事件主要是疫苗在流通环节存在漏洞，" +
         //              "而诺贝尔奖生产记录造假说明生产环节更加重要。疫苗生产关系重大，关系到无数人的生命安全。";
-        //String test = "莫言是第一个获得诺贝尔文学奖的中国作家。";
+        String test = "莫言是第一个获得诺贝尔文学奖的中国作家。";
         //String test = "城建成为外商投资新热点，莫言是第一个诺贝尔文学奖作家。";
         //String test = "管理局发现该企业造假";
         //等严重违反《药品生产质量管理规范》行为。
-        String test = "本所是国家教育部批准的硕士学位授权单位，医学免疫学、病原生物学授权点。迄今为止，共培养硕士研究生66人。2001年度被人事部批准为企业博士后科研工作站。由长春生物所主办的《中国生物制品学杂志》是国家一级专业性杂志，已刊载论文数千篇，被评为中华预防医学会优秀期刊，1999年改为国际版大十六开，有关信息被美国医学会检索系统收录。自1982年国家对药品生产实行批准文号制度以来，本所先后获得各类生物制品生产批件115个，产品种类涵盖： 疫苗、类毒素、抗毒素、免疫血清、血液制品、细胞因子、单克隆抗体、免疫学诊断试剂等诸多类型从1992年起，本所工业总产值首次突破亿元大关，且每年以15-20%的速度递增。产品销售网络遍及全国29个省市自治区。1993年，所组建成立了进出口公司、 获得进出口经营权，　先后有十几种产品出口韩国日本越南、印度、美国、巴基斯坦、加拿大等国家，每年出口创汇额达 100万美元以上。";
+        //String test = "本所是国家教育部批准的硕士学位授权单位，医学免疫学、病原生物学授权点。迄今为止，共培养硕士研究生66人。2001年度被人事部批准为企业博士后科研工作站。由长春生物所主办的《中国生物制品学杂志》是国家一级专业性杂志，已刊载论文数千篇，被评为中华预防医学会优秀期刊，1999年改为国际版大十六开，有关信息被美国医学会检索系统收录。自1982年国家对药品生产实行批准文号制度以来，本所先后获得各类生物制品生产批件115个，产品种类涵盖： 疫苗、类毒素、抗毒素、免疫血清、血液制品、细胞因子、单克隆抗体、免疫学诊断试剂等诸多类型从1992年起，本所工业总产值首次突破亿元大关，且每年以15-20%的速度递增。产品销售网络遍及全国29个省市自治区。1993年，所组建成立了进出口公司、 获得进出口经营权，　先后有十几种产品出口韩国日本越南、印度、美国、巴基斯坦、加拿大等国家，每年出口创汇额达 100万美元以上。";
 
         String[] test_set = test.split("，");
         for (String s : test_set){
             System.out.println(s);
             CoNLLSentence sent = HanLP.parseDependency(s);
-            //System.out.println(sent);
+            System.out.println(sent);
             ArrayList<HashMap> childrenDict = getChildrenDict(sent);
             /*
             for ( int i = 0; i < childrenDict.size();  i++) {
@@ -171,7 +211,11 @@ public class Extractor {
             }
             */
             System.out.println();
-            SVO(sent,childrenDict);
+            //SVO(sent,childrenDict);
+            ArrayList<String> path = getPath(sent,childrenDict,sent.word[8],sent.word[0]);
+            for (String p : path){
+                System.out.print(p+"->");
+            }
             System.out.println();
 
         }
