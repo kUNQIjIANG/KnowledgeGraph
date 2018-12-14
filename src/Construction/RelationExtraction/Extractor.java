@@ -95,8 +95,10 @@ public class Extractor {
                         String relation = curWord.LEMMA;
                         String e2 = trackEntity(sentence, childrenDict, childDict.get("动宾关系").get(0));
                         String temp = relation + e2;
-                        if (temp.equals(e1.substring(0,temp.length()))){
-                            e1 = e1.substring(temp.length());
+                        if (e1.length() > temp.length()){
+                            if (temp.equals(e1.substring(0, temp.length()))) {
+                                e1 = e1.substring(temp.length());
+                            }
                         }
                         if (!e1.contains(temp)){
                             System.out.printf("定语后置动宾关系\t(%s,%s,%s)\n", e1,relation,e2);
@@ -123,25 +125,28 @@ public class Extractor {
     public static void main(String[] args) {
         //String test = "徐先生还具体帮助李红确定了把画雄鹰、松鼠和麻雀作为主攻目标。";
         //String test = "没有用";
+        //String test = "热门报道 金融界 朱邦凌:疫苗生产记录造假的背后是对生命的漠视2016年山东疫苗事件主要是疫苗在流通环节存在漏洞，" +
+        //              "而诺贝尔奖生产记录造假说明生产环节更加重要。疫苗生产关系重大，关系到无数人的生命安全。";
+        String test = "成龙是第一个获得诺贝尔文学奖的中国籍作家。";
         //String test = "城建成为外商投资新热点，莫言是第一个诺贝尔文学奖作家。";
-        String test = "管理局发现该企业造假";
+        //String test = "管理局发现该企业造假";
         //等严重违反《药品生产质量管理规范》行为。
-        CoNLLSentence sent = HanLP.parseDependency(test);
-        System.out.println(sent);
-        ArrayList<HashMap> childDict = getChildrenDict(sent);
-        SVO(sent,childDict);
 
-        for ( int i = 0; i < childDict.size();  i++){
-            System.out.print(sent.word[i].LEMMA);
-            System.out.println(childDict.get(i));
-        }
         String[] test_set = test.split("，");
         for (String s : test_set){
             System.out.println(s);
-            //System.out.println(subvobj(s));
+            CoNLLSentence sent = HanLP.parseDependency(s);
+            System.out.println(sent);
+            ArrayList<HashMap> childrenDict = getChildrenDict(sent);
+            for ( int i = 0; i < childrenDict.size();  i++) {
+                System.out.print(sent.word[i].LEMMA);
+                System.out.println(childrenDict.get(i));
+            }
+            System.out.println();
+            SVO(sent,childrenDict);
+            System.out.println();
 
         }
-
 
         //String[] word_list = new String[sentence.word.length];
         //String[] pos_list = new String[sentence.word.length];
