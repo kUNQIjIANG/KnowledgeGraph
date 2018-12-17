@@ -186,8 +186,7 @@ public class Extractor {
         }
         return paths.get(target);
     }
-
-
+    
     public static void main(String[] args) {
         //String test = "徐先生还具体帮助李红确定了把画雄鹰、松鼠和麻雀作为主攻目标。";
         //String test = "没有用";
