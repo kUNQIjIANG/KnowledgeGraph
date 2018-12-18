@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="af13e945-beb6-412e-9a65-9e52b7793cb0" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/Construction/RelationExtraction/DependencyExtractor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Construction/RelationExtraction/PathExtractor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Construction/RelationExtraction/Extractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Construction/RelationExtraction/Extractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Construction/RelationExtraction/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Construction/RelationExtraction/Test.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -14,11 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Construction/RelationExtraction/Extractor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="188" column="4" selection-start-line="188" selection-start-column="4" selection-end-line="188" selection-end-column="4" />
+            <state relative-caret-position="286">
+              <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -27,10 +30,34 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Construction/RelationExtraction/PathExtractor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="65">
+              <caret line="46" column="5" lean-forward="true" selection-start-line="46" selection-start-column="5" selection-end-line="46" selection-end-column="5" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Construction/RelationExtraction/DependencyExtractor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="637">
+              <caret line="29" selection-start-line="29" selection-end-line="29" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Construction/RelationExtraction/Test.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="54">
-              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+            <state relative-caret-position="293">
+              <caret line="43" column="54" lean-forward="true" selection-start-line="43" selection-start-column="54" selection-end-line="43" selection-end-column="54" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -120,8 +147,10 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="E:/hanLP/hanlp-1.7.0-release/hanlp.properties" />
-        <option value="$PROJECT_DIR$/src/Construction/RelationExtraction/Test.java" />
+        <option value="$PROJECT_DIR$/src/Construction/RelationExtraction/PathExtractor.java" />
         <option value="$PROJECT_DIR$/src/Construction/RelationExtraction/Extractor.java" />
+        <option value="$PROJECT_DIR$/src/Construction/RelationExtraction/DependencyExtractor.java" />
+        <option value="$PROJECT_DIR$/src/Construction/RelationExtraction/Test.java" />
       </list>
     </option>
   </component>
@@ -131,7 +160,9 @@
     <option name="width" value="1890" />
     <option name="height" value="960" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
@@ -181,7 +212,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1545010194236" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1545039406560" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -207,7 +238,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Extractor">
+  <component name="RunManager" selected="Application.Test">
     <configuration name="Extractor" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Construction.RelationExtraction.Extractor" />
       <module name="KnowledgeGraph" />
@@ -236,8 +267,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Extractor" />
         <item itemvalue="Application.Test" />
+        <item itemvalue="Application.Extractor" />
       </list>
     </recent_temporary>
   </component>
@@ -251,7 +282,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1544521177769</updated>
-      <workItem from="1544521181790" duration="64553000" />
+      <workItem from="1544521181790" duration="76080000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1545009566126</created>
@@ -260,11 +291,18 @@
       <option name="project" value="LOCAL" />
       <updated>1545009566126</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="test remote">
+      <created>1545010276996</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1545010276996</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="64553000" />
+    <option name="totallyTimeSpent" value="76080000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -306,7 +344,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="test" />
-    <option name="LAST_COMMIT_MESSAGE" value="test" />
+    <MESSAGE value="test remote" />
+    <option name="LAST_COMMIT_MESSAGE" value="test remote" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://E:/hanlp-1.7.0-release/hanlp-1.7.0-release/hanlp.properties">
@@ -374,10 +413,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Construction/RelationExtraction/Test.java">
+    <entry file="file://$PROJECT_DIR$/src/Construction/RelationExtraction/DependencyExtractor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+        <state relative-caret-position="637">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -386,8 +425,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Construction/RelationExtraction/Extractor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="188" column="4" selection-start-line="188" selection-start-column="4" selection-end-line="188" selection-end-column="4" />
+        <state relative-caret-position="286">
+          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Construction/RelationExtraction/PathExtractor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="65">
+          <caret line="46" column="5" lean-forward="true" selection-start-line="46" selection-start-column="5" selection-end-line="46" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Construction/RelationExtraction/Test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="43" column="54" lean-forward="true" selection-start-line="43" selection-start-column="54" selection-end-line="43" selection-end-column="54" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
