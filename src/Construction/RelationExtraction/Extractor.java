@@ -38,9 +38,10 @@ public class Extractor {
 
     ArrayList<CoNLLWord> getNER(CoNLLSentence sent){
         ArrayList<CoNLLWord> ners = new ArrayList<>();
-        String[] posNers = {"nr","ns","nt","nx","nz"};
+        String[] posNers = {"nr","ns","nt","nx","nz","nh"};
+        String[] depRels = {"主谓关系","动宾关系","介宾关系"};
         for (CoNLLWord word : sent){
-            if (Arrays.asList(posNers).contains(word.POSTAG)){
+            if (Arrays.asList(posNers).contains(word.POSTAG) || Arrays.asList(depRels).contains(word.DEPREL)){
                 ners.add(word);
             }
         }
@@ -49,8 +50,9 @@ public class Extractor {
 
     ArrayList<CoNLLWord> getVerb(CoNLLSentence sent){
         ArrayList<CoNLLWord> verbs = new ArrayList<>();
+        String[] depRels = {"核心关系","并列关系"};
         for (CoNLLWord word : sent){
-            if (word.CPOSTAG.equals("v")){
+            if (word.CPOSTAG.equals("v") && !word.DEPREL.equals("动宾关系")){
                 verbs.add(word);
             }
         }

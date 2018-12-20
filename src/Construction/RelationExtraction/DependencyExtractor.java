@@ -41,8 +41,8 @@ public class DependencyExtractor extends Extractor {
     void SVO(CoNLLSentence sentence, ArrayList<HashMap> childrenDict){
         for (int i = 0; i < sentence.word.length; i++){
             CoNLLWord curWord = sentence.word[i];
+            HashMap<String,ArrayList<Integer>> childDict = childrenDict.get(i);
             if (curWord.CPOSTAG.equals("v")){
-                HashMap<String,ArrayList<Integer>> childDict = childrenDict.get(i);
 
                 if (childDict.containsKey("主谓关系") && childDict.containsKey("动宾关系")){
                     double score = -Double.MAX_VALUE;
@@ -65,9 +65,24 @@ public class DependencyExtractor extends Extractor {
 
                 if (childDict.containsKey("主谓关系") && childDict.containsKey("动宾关系")){
                     String e1 = trackEntity(sentence, childrenDict, childDict.get("主谓关系").get(0));
+
                     String relation = curWord.LEMMA;
                     String e2 = trackEntity(sentence, childrenDict, childDict.get("动宾关系").get(0));
                     System.out.printf("主谓宾关系\t(%s,%s,%s)\n",e1,relation,e2);
+                    int sub = childDict.get("主谓关系").get(0);
+                    HashMap<String,ArrayList<Integer>> subChild = childrenDict.get(sub-1);
+                    if (subChild.containsKey("并列关系")){
+                        String coo = trackEntity(sentence,childrenDict,subChild.get("并列关系").get(0));
+                        System.out.printf("并列主语\t(%s,%s,%s)\n",coo,relation,e2);
+                    }
+                }
+
+                if (curWord.DEPREL.equals("并列关系") && curWord.HEAD.DEPREL.equals("核心关系")){
+                    HashMap<String,ArrayList<Integer>> headChildDict = childrenDict.get(curWord.HEAD.ID-1);
+                    String e1 = trackEntity(sentence, childrenDict, headChildDict.get("主谓关系").get(0));
+                    String relation = curWord.LEMMA;
+                    String e2 = trackEntity(sentence, childrenDict, childDict.get("动宾关系").get(0));
+                    System.out.printf("并列关系相同主语\t(%s,%s,%s)\n",e1,relation,e2);
                 }
 
                 if (curWord.DEPREL.equals("定中关系")){
@@ -96,6 +111,19 @@ public class DependencyExtractor extends Extractor {
                         String e2 = trackEntity(sentence,childrenDict,pos.get("介宾关系").get(0));
                         System.out.printf("介宾关系主谓动补\t(%s,%s,%s)\n",e1,relation,e2);
                     }
+                }
+            }
+            else if (curWord.DEPREL.equals("主谓关系") || curWord.DEPREL.equals("动宾关系")){
+                if (childDict.containsKey("定中关系")){
+                    int child = childDict.get("定中关系").get(0);
+                    HashMap<String,ArrayList<Integer>> grandchildDict = childrenDict.get(child-1);
+                    if (grandchildDict.containsKey("定中关系")){
+                        String e2 = curWord.LEMMA;
+                        String relation = sentence.word[child-1].LEMMA;
+                        String e1 = sentence.word[grandchildDict.get("定中关系").get(0)-1].LEMMA;
+                        System.out.printf("定中关系属性值\t(%s,%s,%s)\n",e1,relation,e2);
+                    }
+
                 }
             }
         }

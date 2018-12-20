@@ -48,7 +48,7 @@ public class PathExtractor extends Extractor {
 
     ArrayList<String> getRelations (CoNLLSentence sent,ArrayList<HashMap> childrenDict){
         ArrayList<String> relations = new ArrayList<>();
-        String[] keyPaths = {"主谓关系","动宾关系","间宾关系","前置宾语","兼语","状中关系"};
+        String[] keyPaths = {"主谓关系","动宾关系","间宾关系","前置宾语","兼语","状中结构"};
         ArrayList<CoNLLWord> verbs = getVerb(sent);
         ArrayList<CoNLLWord> ners = getNER(sent);
         for (CoNLLWord verb : verbs){
