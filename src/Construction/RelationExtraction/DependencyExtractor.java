@@ -82,7 +82,7 @@ public class DependencyExtractor extends Extractor {
                     String e1 = trackEntity(sentence, childrenDict, headChildDict.get("主谓关系").get(0));
                     String relation = curWord.LEMMA;
                     String e2 = trackEntity(sentence, childrenDict, childDict.get("动宾关系").get(0));
-                    System.out.printf("并列关系相同主语\t(%s,%s,%s)\n",e1,relation,e2);
+                    System.out.printf("并列谓语\t(%s,%s,%s)\n",e1,relation,e2);
                 }
 
                 if (curWord.DEPREL.equals("定中关系")){
