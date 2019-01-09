@@ -6,15 +6,15 @@ import com.hankcs.hanlp.corpus.dependency.CoNll.CoNLLWord;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class DependencyExtractor extends Extractor {
+class DependencyExtractor extends Extractor {
 
     private static String trackEntity(CoNLLSentence sentence, ArrayList<HashMap> childrenDict, int wordId){
         if (!childrenDict.get(wordId-1).isEmpty()) {
             HashMap<String, ArrayList<Integer>> childDict = childrenDict.get(wordId-1);
-            String prefix = "";
+            StringBuffer prefix = new StringBuffer("");
             if (childDict.containsKey("定中关系")) {
                 for (int i : childDict.get("定中关系")) {
-                    prefix += trackEntity(sentence, childrenDict, i);
+                    prefix.append(trackEntity(sentence, childrenDict, i));
                 }
             }
 
@@ -33,7 +33,7 @@ public class DependencyExtractor extends Extractor {
         return sentence.word[wordId-1].LEMMA;
     }
 
-    public static double entityPairScore(int e1_pos, int r_pos, int e2_pos){
+    static double entityPairScore(int e1_pos, int r_pos, int e2_pos){
         assert e2_pos > e1_pos : "论元一应该在论元二之前。";
         return 1.0/(e1_pos + e2_pos) + 1.0/(e1_pos - r_pos) + 1.0/(e2_pos - r_pos + 1);
     }
@@ -64,25 +64,44 @@ public class DependencyExtractor extends Extractor {
                 }
 
                 if (childDict.containsKey("主谓关系") && childDict.containsKey("动宾关系")){
-                    String e1 = trackEntity(sentence, childrenDict, childDict.get("主谓关系").get(0));
 
+                    String e1 = trackEntity(sentence, childrenDict, childDict.get("主谓关系").get(0));
                     String relation = curWord.LEMMA;
                     String e2 = trackEntity(sentence, childrenDict, childDict.get("动宾关系").get(0));
                     System.out.printf("主谓宾关系\t(%s,%s,%s)\n",e1,relation,e2);
+
                     int sub = childDict.get("主谓关系").get(0);
                     HashMap<String,ArrayList<Integer>> subChild = childrenDict.get(sub-1);
                     if (subChild.containsKey("并列关系")){
                         String coo = trackEntity(sentence,childrenDict,subChild.get("并列关系").get(0));
                         System.out.printf("并列主语\t(%s,%s,%s)\n",coo,relation,e2);
                     }
+
+                    int ob = childDict.get("动宾关系").get(0);
+                    HashMap<String,ArrayList<Integer>> obChild = childrenDict.get(ob-1);
+                    if (obChild.containsKey("并列关系")){
+                        String coo = trackEntity(sentence,childrenDict,obChild.get("并列关系").get(0));
+                        System.out.printf("并列宾语\t(%s,%s,%s)\n",e1,relation,coo);
+                    }
+
+                    if (childDict.containsKey("并列关系")){
+                        for (int v : childDict.get("并列关系")){
+                            String cooRel = sentence.word[v-1].LEMMA;
+                            System.out.printf("并列谓语\t(%s,%s,%s)\n",e1,cooRel,e2);
+                        }
+                    }
                 }
 
                 if (curWord.DEPREL.equals("并列关系") && curWord.HEAD.DEPREL.equals("核心关系")){
                     HashMap<String,ArrayList<Integer>> headChildDict = childrenDict.get(curWord.HEAD.ID-1);
-                    String e1 = trackEntity(sentence, childrenDict, headChildDict.get("主谓关系").get(0));
-                    String relation = curWord.LEMMA;
-                    String e2 = trackEntity(sentence, childrenDict, childDict.get("动宾关系").get(0));
-                    System.out.printf("并列谓语\t(%s,%s,%s)\n",e1,relation,e2);
+
+                    if (headChildDict.containsKey("主谓关系") && headChildDict.containsKey("动宾关系")){
+                        String e1 = trackEntity(sentence, childrenDict, headChildDict.get("主谓关系").get(0));
+                        String relation = curWord.LEMMA;
+                        String e2 = trackEntity(sentence, childrenDict, childDict.get("动宾关系").get(0));
+                        System.out.printf("并列谓语2\t(%s,%s,%s)\n",e1,relation,e2);
+                    }
+
                 }
 
                 if (curWord.DEPREL.equals("定中关系")){
