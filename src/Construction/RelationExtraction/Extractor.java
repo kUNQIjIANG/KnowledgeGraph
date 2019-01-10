@@ -36,6 +36,24 @@ public class Extractor {
 
     }
 
+    int getNearest(ArrayList<Integer> children, int parent){
+        int dis = Integer.MAX_VALUE;
+        int index = -1;
+        for (int c : children){
+            int temp = Math.abs(parent-c);
+            if (temp < dis) index = c;
+        }
+        return index;
+    }
+
+    int personPronounResolution(CoNLLSentence sentence, int cur){
+        for ( int i = cur-1; i >= 1; i--){
+            if (sentence.word[i-1].POSTAG.equals("nr")) return i;
+        }
+        System.out.println("no person");
+        return -1;
+    }
+
     ArrayList<CoNLLWord> getNER(CoNLLSentence sent){
         ArrayList<CoNLLWord> ners = new ArrayList<>();
         String[] posNers = {"nr","ns","nt","nx","nz","nh"};

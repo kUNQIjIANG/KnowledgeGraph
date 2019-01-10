@@ -9,8 +9,17 @@ import java.util.concurrent.CompletionService;
 
 class DependencyExtractor extends Extractor {
 
-    private static String trackEntity(CoNLLSentence sentence, ArrayList<HashMap> childrenDict, int wordId){
+    private String trackEntity(CoNLLSentence sentence, ArrayList<HashMap> childrenDict, int wordId){
+
+        if (sentence.word[wordId-1].LEMMA.equals("他") || sentence.word[wordId-1].LEMMA.equals("她")){
+            int person = personPronounResolution(sentence,wordId);
+            return trackEntity(sentence, childrenDict, person);
+        }
+
         if (!childrenDict.get(wordId-1).isEmpty()) {
+
+            String origin = sentence.word[wordId-1].LEMMA;
+
             HashMap<String, ArrayList<Integer>> childDict = childrenDict.get(wordId-1);
             StringBuffer prefix = new StringBuffer("");
             if (childDict.containsKey("定中关系")) {
@@ -34,27 +43,36 @@ class DependencyExtractor extends Extractor {
                 if (childDict.containsKey("主谓关系")) {
                     postfix = trackEntity(sentence, childrenDict, childDict.get("主谓关系").get(0)) + postfix;
                 }
+                if (childDict.containsKey("右附加关系")) {
+                    // 国务院 批准 的
+                    int d = childDict.get("右附加关系").get(0);
+                    String de = sentence.word[d-1].LEMMA;
+                    origin = origin + de;
+                }
             }
 
-            return prefix + sentence.word[wordId-1].LEMMA + postfix;
+            if (prefix.length() == 0) return postfix + origin;
+            else return prefix + origin + postfix;
         }
         return sentence.word[wordId-1].LEMMA;
     }
 
-    private static String trackRelation(CoNLLSentence sentence, ArrayList<HashMap> childrenDict, int wordId){
+    private String trackRelation(CoNLLSentence sentence, ArrayList<HashMap> childrenDict, int wordId){
         // 批准 -> 被人事部批准为
         if (!childrenDict.get(wordId-1).isEmpty()) {
             HashMap<String, ArrayList<Integer>> childDict = childrenDict.get(wordId-1);
             StringBuffer prefix = new StringBuffer("");
             if (childDict.containsKey("状中结构")){
-                int pId = childDict.get("状中结构").get(0);
+                int pId = getNearest(childDict.get("状中结构"),wordId);
+                //int pId = childDict.get("状中结构").get(0);
                 String p = sentence.word[pId-1].LEMMA;
                 prefix.append(p);
 
                 HashMap<String,ArrayList<Integer>> pChildDict = childrenDict.get(pId-1);
                 if (pChildDict.containsKey("介宾关系")){
                     int nId = pChildDict.get("介宾关系").get(0);
-                    String n = sentence.word[nId-1].LEMMA;
+                    String n = trackEntity(sentence, childrenDict, nId);
+                    //String n = sentence.word[nId-1].LEMMA;
                     prefix.append(n);
                 }
             }
@@ -74,6 +92,7 @@ class DependencyExtractor extends Extractor {
         assert e2_pos > e1_pos : "论元一应该在论元二之前。";
         return 1.0/(e1_pos + e2_pos) + 1.0/(e1_pos - r_pos) + 1.0/(e2_pos - r_pos + 1);
     }
+
 
     void SVO(CoNLLSentence sentence, ArrayList<HashMap> childrenDict){
         for (int i = 0; i < sentence.word.length; i++){
@@ -102,23 +121,28 @@ class DependencyExtractor extends Extractor {
 
                 if (childDict.containsKey("主谓关系") && childDict.containsKey("动宾关系")){
 
-                    String e1 = trackEntity(sentence, childrenDict, childDict.get("主谓关系").get(0));
-                    String relation = curWord.LEMMA;
+                    int id = getNearest(childDict.get("主谓关系"),curWord.ID);
+                    String e1 = trackEntity(sentence, childrenDict, id);
+                    //String relation = curWord.LEMMA;
+                    String relation = trackRelation(sentence, childrenDict, curWord.ID);
                     String e2 = trackEntity(sentence, childrenDict, childDict.get("动宾关系").get(0));
                     System.out.printf("主谓宾关系\t(%s,%s,%s)\n",e1,relation,e2);
-
-                    int sub = childDict.get("主谓关系").get(0);
+                    int sub = childDict.get("主谓关系").get(childDict.get("主谓关系").size()-1);
                     HashMap<String,ArrayList<Integer>> subChild = childrenDict.get(sub-1);
                     if (subChild.containsKey("并列关系")){
-                        String coo = trackEntity(sentence,childrenDict,subChild.get("并列关系").get(0));
-                        System.out.printf("并列主语\t(%s,%s,%s)\n",coo,relation,e2);
+                        for ( int c : subChild.get("并列关系")) {
+                            String coo = trackEntity(sentence, childrenDict, c);
+                            System.out.printf("并列主语\t(%s,%s,%s)\n", coo, relation, e2);
+                        }
                     }
 
                     int ob = childDict.get("动宾关系").get(0);
                     HashMap<String,ArrayList<Integer>> obChild = childrenDict.get(ob-1);
                     if (obChild.containsKey("并列关系")){
-                        String coo = trackEntity(sentence,childrenDict,obChild.get("并列关系").get(0));
-                        System.out.printf("并列宾语\t(%s,%s,%s)\n",e1,relation,coo);
+                        for ( int c : obChild.get("并列关系")) {
+                            String coo = trackEntity(sentence, childrenDict, c);
+                            System.out.printf("并列宾语\t(%s,%s,%s)\n", e1, relation, coo);
+                        }
                     }
 
                     /*
@@ -135,7 +159,8 @@ class DependencyExtractor extends Extractor {
                     HashMap<String,ArrayList<Integer>> headChildDict = childrenDict.get(curWord.HEAD.ID-1);
                     // 相同主语，不同宾语
                     if (headChildDict.containsKey("主谓关系") && childDict.containsKey("动宾关系")){
-                        String e1 = trackEntity(sentence, childrenDict, headChildDict.get("主谓关系").get(0));
+                        int id = getNearest(headChildDict.get("主谓关系"),curWord.HEAD.ID);
+                        String e1 = trackEntity(sentence, childrenDict, id);
                         String relation = curWord.LEMMA;
                         String e2 = trackEntity(sentence, childrenDict, childDict.get("动宾关系").get(0));
                         System.out.printf("并列谓语2\t(%s,%s,%s)\n",e1,relation,e2);
@@ -183,17 +208,21 @@ class DependencyExtractor extends Extractor {
                 }
             }
             else if (curWord.DEPREL.equals("主谓关系") || curWord.DEPREL.equals("动宾关系")){
+                // 德国总统高克 -> ns, n, nr
                 System.out.println("zword: " + curWord.LEMMA);
                 if (childDict.containsKey("定中关系")){
                     int child = childDict.get("定中关系").get(0);
-                    HashMap<String,ArrayList<Integer>> grandchildDict = childrenDict.get(child-1);
-                    if (grandchildDict.containsKey("定中关系")){
-                        String e2 = curWord.LEMMA;
-                        String relation = sentence.word[child-1].LEMMA;
-                        String e1 = sentence.word[grandchildDict.get("定中关系").get(0)-1].LEMMA;
-                        System.out.printf("定中关系属性值\t(%s,%s,%s)\n",e1,relation,e2);
+                    if ( sentence.word[child-1].POSTAG.charAt(0) == 'n') {
+                        HashMap<String, ArrayList<Integer>> grandchildDict = childrenDict.get(child - 1);
+                        if (grandchildDict.containsKey("定中关系")) {
+                            if (sentence.word[grandchildDict.get("定中关系").get(0)-1].POSTAG.charAt(0) == 'n') {
+                                String e2 = curWord.LEMMA;
+                                String relation = sentence.word[child - 1].LEMMA;
+                                String e1 = sentence.word[grandchildDict.get("定中关系").get(0) - 1].LEMMA;
+                                System.out.printf("定中关系属性值\t(%s,%s,%s)\n", e1, relation, e2);
+                            }
+                        }
                     }
-
                 }
             }
         }
