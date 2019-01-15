@@ -1,7 +1,10 @@
 package Construction.RelationExtraction;
 
+import GraphDB.TestHelloWorld;
 import com.hankcs.hanlp.corpus.dependency.CoNll.CoNLLSentence;
 import com.hankcs.hanlp.corpus.dependency.CoNll.CoNLLWord;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,7 +54,9 @@ class DependencyExtractor extends Extractor {
                 }
             }
 
-            if (prefix.length() == 0) return postfix + origin;
+            if (prefix.length() == 0 && !childDict.containsKey("动宾关系") && childDict.containsKey("主谓关系")) {
+                return postfix + origin;
+            }
             else return prefix + origin + postfix;
         }
         return sentence.word[wordId-1].LEMMA;
@@ -93,8 +98,22 @@ class DependencyExtractor extends Extractor {
         return 1.0/(e1_pos + e2_pos) + 1.0/(e1_pos - r_pos) + 1.0/(e2_pos - r_pos + 1);
     }
 
+    JSONObject getTupleObject(String e1, String rel, String e2){
+        JSONObject tupleObj = new JSONObject();
+        try{
+            tupleObj.put("e1",e1);
+            tupleObj.put("rel",rel);
+            tupleObj.put("e2",e2);
+        } catch (Exception e){
+            System.out.println("json obj exceptioni");
+        }
+        return tupleObj;
+    }
 
-    void SVO(CoNLLSentence sentence, ArrayList<HashMap> childrenDict){
+
+    JSONArray SVO(CoNLLSentence sentence, ArrayList<HashMap> childrenDict){
+        JSONArray tupleArray =  new JSONArray();
+        JSONObject tupleObj;
         for (int i = 0; i < sentence.word.length; i++){
             CoNLLWord curWord = sentence.word[i];
             HashMap<String,ArrayList<Integer>> childDict = childrenDict.get(i);
@@ -126,7 +145,12 @@ class DependencyExtractor extends Extractor {
                     //String relation = curWord.LEMMA;
                     String relation = trackRelation(sentence, childrenDict, curWord.ID);
                     String e2 = trackEntity(sentence, childrenDict, childDict.get("动宾关系").get(0));
+
+                    //gdbWriter.addRelation(e1,relation,coo);
+                    tupleObj = getTupleObject(e1,relation,e2);
+                    tupleArray.put(tupleObj);
                     System.out.printf("主谓宾关系\t(%s,%s,%s)\n",e1,relation,e2);
+
                     int sub = childDict.get("主谓关系").get(childDict.get("主谓关系").size()-1);
                     HashMap<String,ArrayList<Integer>> subChild = childrenDict.get(sub-1);
                     if (subChild.containsKey("并列关系")){
@@ -141,18 +165,14 @@ class DependencyExtractor extends Extractor {
                     if (obChild.containsKey("并列关系")){
                         for ( int c : obChild.get("并列关系")) {
                             String coo = trackEntity(sentence, childrenDict, c);
+
+                            tupleObj = getTupleObject(e1,relation,coo);
+                            tupleArray.put(tupleObj);
                             System.out.printf("并列宾语\t(%s,%s,%s)\n", e1, relation, coo);
+                            //gdbWriter.addRelation(e1,relation,coo);
                         }
                     }
 
-                    /*
-                    if (childDict.containsKey("并列关系")){
-                        for (int v : childDict.get("并列关系")){
-                            String cooRel = trackRelation(sentence,childrenDict,v);
-                            System.out.printf("并列谓语\t(%s,%s,%s)\n",e1,cooRel,e2);
-                        }
-                    }
-                    */
                 }
 
                 else if (curWord.DEPREL.equals("并列关系") && curWord.HEAD.DEPREL.equals("核心关系")){
@@ -163,7 +183,11 @@ class DependencyExtractor extends Extractor {
                         String e1 = trackEntity(sentence, childrenDict, id);
                         String relation = curWord.LEMMA;
                         String e2 = trackEntity(sentence, childrenDict, childDict.get("动宾关系").get(0));
-                        System.out.printf("并列谓语2\t(%s,%s,%s)\n",e1,relation,e2);
+
+                        tupleObj = getTupleObject(e1,relation,e2);
+                        tupleArray.put(tupleObj);
+                        System.out.printf("并列谓语\t(%s,%s,%s)\n",e1,relation,e2);
+
                     } else if ( headChildDict.containsKey("主谓关系") && childDict.containsKey("动补结构")) {
 
                         int d = childDict.get("动补结构").get(0);
@@ -173,6 +197,10 @@ class DependencyExtractor extends Extractor {
                             String e1 = trackEntity(sentence, childrenDict, headChildDict.get("主谓关系").get(0));
                             String cooRel = trackRelation(sentence,childrenDict,curWord.ID);
                             String e2 = trackEntity(sentence,childrenDict,dChildDict.get("动宾关系").get(0));
+
+                            //gdbWriter.addRelation(e1,cooRel,e2);
+                            tupleObj = getTupleObject(e1,cooRel,e2);
+                            tupleArray.put(tupleObj);
                             System.out.printf("被动补关系\t(%s,%s,%s)\n",e1,cooRel,e2);
                         }
                     }
@@ -226,5 +254,6 @@ class DependencyExtractor extends Extractor {
                 }
             }
         }
+        return tupleArray;
     }
 }

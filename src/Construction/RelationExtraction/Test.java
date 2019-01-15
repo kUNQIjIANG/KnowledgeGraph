@@ -1,5 +1,6 @@
 package Construction.RelationExtraction;
 
+import GraphDB.GraphWritor;
 import com.hankcs.hanlp.HanLP;
 import com.hankcs.hanlp.corpus.dependency.CoNll.CoNLLSentence;
 import com.hankcs.hanlp.corpus.document.sentence.Sentence;
@@ -10,6 +11,8 @@ import com.hankcs.hanlp.model.crf.CRFNERecognizer;
 import com.hankcs.hanlp.model.perceptron.PerceptronLexicalAnalyzer;
 import com.hankcs.hanlp.HanLP.Config;
 import com.hankcs.hanlp.model.perceptron.PerceptronNERecognizer;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +20,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class Test {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
             String SENTENCE = "莫言是第一个获得诺贝尔文学奖的中国籍作家。";
 
             PerceptronLexicalAnalyzer analyzer = new PerceptronLexicalAnalyzer("E:/hanLP/data/model/perceptron/pku199801/cws.bin",
@@ -83,13 +86,14 @@ public class Test {
             DependencyExtractor depExt = new DependencyExtractor();
             PathExtractor pathExt = new PathExtractor();
 
-            String[] test_set = test.split("&");
-            for (String s : test_set){
-                System.out.println(s);
-                CoNLLSentence sent = HanLP.parseDependency(s);
-                System.out.println(sent);
+            try (GraphWritor graphWritor = new GraphWritor( "bolt://localhost:7687", "neo4j", "9458ilsj" )){
+                String[] test_set = test.split("&");
+                for (String s : test_set){
+                    System.out.println(s);
+                    CoNLLSentence sent = HanLP.parseDependency(s);
+                    System.out.println(sent);
 
-                ArrayList<HashMap> childrenDict = depExt.getChildrenDict(sent);
+                    ArrayList<HashMap> childrenDict = depExt.getChildrenDict(sent);
 
                 /*
                 for ( int i = 0; i < childrenDict.size();  i++) {
@@ -97,13 +101,18 @@ public class Test {
                     System.out.println(childrenDict.get(i));
                 }
                 */
-                System.out.println();
+                    System.out.println();
 
-                depExt.SVO(sent,childrenDict);
-                ArrayList<String> relations = pathExt.getRelations(sent,childrenDict);
-                System.out.println(Arrays.toString(relations.toArray()));
-                System.out.println();
+                    JSONArray results = depExt.SVO(sent,childrenDict);
+                    for ( int i = 0; i < results.length(); i++){
+                        JSONObject tuple = results.getJSONObject(i);
+                        graphWritor.addRelation(tuple.get("e1").toString(),tuple.get("rel").toString(),tuple.get("e2").toString());
+                    }
+                    //ArrayList<String> relations = pathExt.getRelations(sent,childrenDict);
+                    //System.out.println(Arrays.toString(relations.toArray()));
+                    System.out.println();
 
+                }
             }
 
 

@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="24917233-fe4f-4664-acf1-1d9b1c6ee14d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/GraphDB/GraphWritor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GraphDB/Store.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/GraphDB/TestHelloWorld.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/lib.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Construction/RelationExtraction/DependencyExtractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Construction/RelationExtraction/DependencyExtractor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Construction/RelationExtraction/Extractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Construction/RelationExtraction/Extractor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Construction/RelationExtraction/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Construction/RelationExtraction/Test.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,7 +21,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Construction/Data/HttpPostor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1914">
+            <state relative-caret-position="633">
               <caret line="102" selection-start-line="102" selection-end-line="102" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -39,11 +42,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Construction/RelationExtraction/DependencyExtractor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="756">
-              <caret line="46" column="31" lean-forward="true" selection-start-line="46" selection-start-column="31" selection-end-line="46" selection-end-column="31" />
+            <state relative-caret-position="536">
+              <caret line="188" column="79" lean-forward="true" selection-start-line="188" selection-start-column="79" selection-end-line="188" selection-end-column="79" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -54,17 +57,53 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Construction/RelationExtraction/Extractor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="616">
+            <state relative-caret-position="946">
               <caret line="53" column="18" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="18" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Construction/RelationExtraction/Test.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="523">
-              <caret line="45" column="21" selection-start-line="45" selection-start-column="21" selection-end-line="45" selection-end-column="21" />
+            <state relative-caret-position="949">
+              <caret line="87" lean-forward="true" selection-start-line="87" selection-end-line="87" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GraphDB/GraphWritor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-511">
+              <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GraphDB/Store.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="220">
+              <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GraphDB/TestHelloWorld.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="501">
+              <caret line="55" column="55" lean-forward="true" selection-end-line="86" selection-end-column="1" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -85,6 +124,7 @@
     <findStrings>
       <find>升温</find>
       <find>vvv</find>
+      <find>gdb</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -97,6 +137,9 @@
         <option value="$PROJECT_DIR$/src/Construction/Data/HttpPost.java" />
         <option value="$PROJECT_DIR$/src/Construction/Data/HttpPostor.java" />
         <option value="$PROJECT_DIR$/src/Construction/RelationExtraction/Extractor.java" />
+        <option value="$PROJECT_DIR$/src/GraphDB/Store.java" />
+        <option value="$PROJECT_DIR$/src/GraphDB/TestHelloWorld.java" />
+        <option value="$PROJECT_DIR$/src/GraphDB/GraphWritor.java" />
         <option value="$PROJECT_DIR$/src/Construction/RelationExtraction/Test.java" />
         <option value="$PROJECT_DIR$/src/Construction/RelationExtraction/DependencyExtractor.java" />
       </list>
@@ -107,6 +150,9 @@
     <option name="y" value="-8" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -123,32 +169,13 @@
             <path>
               <item name="KnowledgeGraph" type="b2602c69:ProjectViewProjectNode" />
               <item name="KnowledgeGraph" type="462c0819:PsiDirectoryNode" />
-              <item name=".idea" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="KnowledgeGraph" type="b2602c69:ProjectViewProjectNode" />
-              <item name="KnowledgeGraph" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="KnowledgeGraph" type="b2602c69:ProjectViewProjectNode" />
               <item name="KnowledgeGraph" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Construction" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="KnowledgeGraph" type="b2602c69:ProjectViewProjectNode" />
-              <item name="KnowledgeGraph" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Construction" type="462c0819:PsiDirectoryNode" />
-              <item name="Data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="KnowledgeGraph" type="b2602c69:ProjectViewProjectNode" />
-              <item name="KnowledgeGraph" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Construction" type="462c0819:PsiDirectoryNode" />
-              <item name="RelationExtraction" type="462c0819:PsiDirectoryNode" />
+              <item name="GraphDB" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="KnowledgeGraph" type="b2602c69:ProjectViewProjectNode" />
@@ -165,8 +192,8 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547084270358" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547533230681" />
+    <property name="last_opened_file_path" value="E:/neo4j-java-driver-1.7.2.jar!/" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Libraries" />
@@ -226,9 +253,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestHelloWorld" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="GraphDB.TestHelloWorld" />
+      <module name="KnowledgeGraph" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="GraphDB.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Test" />
+        <item itemvalue="Application.TestHelloWorld" />
         <item itemvalue="Application.TestCoreNlp" />
         <item itemvalue="Application.HttpPostor" />
       </list>
@@ -247,7 +288,7 @@
       <workItem from="1546842927993" duration="1546000" />
       <workItem from="1546920669226" duration="30137000" />
       <workItem from="1547085668618" duration="8501000" />
-      <workItem from="1547103139078" duration="11671000" />
+      <workItem from="1547103139078" duration="28508000" />
     </task>
     <task id="LOCAL-00001" summary="HttpPost">
       <created>1547000696222</created>
@@ -270,17 +311,24 @@
       <option name="project" value="LOCAL" />
       <updated>1547030166386</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="1，指代消解&#10;2，附加关系">
+      <created>1547115715362</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1547115715362</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="51855000" />
+    <option name="totallyTimeSpent" value="68692000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.25906184" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25906184" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -350,7 +398,8 @@
     <MESSAGE value="modified" />
     <MESSAGE value="3 kinds of coordinate" />
     <MESSAGE value="动补结构+关系追踪" />
-    <option name="LAST_COMMIT_MESSAGE" value="动补结构+关系追踪" />
+    <MESSAGE value="1，指代消解&#10;2，附加关系" />
+    <option name="LAST_COMMIT_MESSAGE" value="1，指代消解&#10;2，附加关系" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/.gitignore">
@@ -379,16 +428,6 @@
     <entry file="file://$PROJECT_DIR$/.idea/vcs.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Construction/Data/HttpPostor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1914">
-          <caret line="102" selection-start-line="102" selection-end-line="102" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Construction/RelationExtraction/TestCoreNlp.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
@@ -399,17 +438,47 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/GraphDB/Store.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Construction/RelationExtraction/Extractor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="616">
+        <state relative-caret-position="946">
           <caret line="53" column="18" selection-start-line="53" selection-start-column="18" selection-end-line="53" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Construction/RelationExtraction/Test.java">
+    <entry file="file://$PROJECT_DIR$/src/Construction/Data/HttpPostor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="523">
-          <caret line="45" column="21" selection-start-line="45" selection-start-column="21" selection-end-line="45" selection-end-column="21" />
+        <state relative-caret-position="633">
+          <caret line="102" selection-start-line="102" selection-end-line="102" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GraphDB/TestHelloWorld.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="501">
+          <caret line="55" column="55" lean-forward="true" selection-end-line="86" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GraphDB/GraphWritor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-511">
+          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -418,8 +487,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Construction/RelationExtraction/DependencyExtractor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="756">
-          <caret line="46" column="31" lean-forward="true" selection-start-line="46" selection-start-column="31" selection-end-line="46" selection-end-column="31" />
+        <state relative-caret-position="536">
+          <caret line="188" column="79" lean-forward="true" selection-start-line="188" selection-start-column="79" selection-end-line="188" selection-end-column="79" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Construction/RelationExtraction/Test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="949">
+          <caret line="87" lean-forward="true" selection-start-line="87" selection-end-line="87" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -483,7 +562,6 @@
             <option name="proportions">
               <list>
                 <option value="0.2" />
-                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
@@ -503,7 +581,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>org.json</last-edited>
+          <last-edited>lib</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
